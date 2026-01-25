@@ -17,19 +17,28 @@ jobs:
       - name: Get version
         id: version
         run: |
+          set -e
           VERSION="${{ github.event.client_payload.version }}"
+          if [ -z "$VERSION" ]; then
+            echo "Error: version is empty"
+            exit 1
+          fi
           VERSION="${VERSION#v}"
           echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Processing version: $VERSION"
 
       - name: Download binaries and calculate SHA256
         id: sha
         run: |
+          set -e
           VERSION="${{ steps.version.outputs.version }}"
 
-          curl -L -o ccx-darwin-arm64 "https://github.com/tim80411/ccx/releases/download/v${VERSION}/ccx-darwin-arm64"
-          curl -L -o ccx-darwin-x64 "https://github.com/tim80411/ccx/releases/download/v${VERSION}/ccx-darwin-x64"
-          curl -L -o ccx-linux-x64 "https://github.com/tim80411/ccx/releases/download/v${VERSION}/ccx-linux-x64"
+          echo "Downloading binaries for version v${VERSION}..."
+          curl -fL -o ccx-darwin-arm64 "https://github.com/tim80411/ccx/releases/download/v${VERSION}/ccx-darwin-arm64"
+          curl -fL -o ccx-darwin-x64 "https://github.com/tim80411/ccx/releases/download/v${VERSION}/ccx-darwin-x64"
+          curl -fL -o ccx-linux-x64 "https://github.com/tim80411/ccx/releases/download/v${VERSION}/ccx-linux-x64"
 
+          echo "Calculating SHA256 checksums..."
           echo "darwin_arm64=$(sha256sum ccx-darwin-arm64 | cut -d' ' -f1)" >> $GITHUB_OUTPUT
           echo "darwin_x64=$(sha256sum ccx-darwin-x64 | cut -d' ' -f1)" >> $GITHUB_OUTPUT
           echo "linux_x64=$(sha256sum ccx-linux-x64 | cut -d' ' -f1)" >> $GITHUB_OUTPUT
@@ -41,6 +50,7 @@ jobs:
           SHA_DARWIN_X64: ${{ steps.sha.outputs.darwin_x64 }}
           SHA_LINUX_X64: ${{ steps.sha.outputs.linux_x64 }}
         run: |
+          set -e
           sed -i "s/version \".*\"/version \"$VERSION\"/" Formula/ccx.rb
           sed -i "s|releases/download/v[^/]*/|releases/download/v$VERSION/|g" Formula/ccx.rb
 
@@ -51,8 +61,13 @@ jobs:
 
       - name: Commit and push
         run: |
+          set -e
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add Formula/ccx.rb
-          git commit -m "Update ccx to v${{ steps.version.outputs.version }}"
-          git push
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Update ccx to v${{ steps.version.outputs.version }}"
+            git push
+          fi
