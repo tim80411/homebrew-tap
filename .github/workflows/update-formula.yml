@@ -1,6 +1,12 @@
 name: Update Formula
 
 on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to update to (e.g., v0.1.0 or 0.1.0)'
+        required: true
+        type: string
   repository_dispatch:
     types: [update-formula]
 
@@ -22,7 +28,8 @@ jobs:
         id: version
         run: |
           set -e
-          VERSION="${{ github.event.client_payload.version }}"
+          # Support both workflow_dispatch (manual) and repository_dispatch (API)
+          VERSION="${{ github.event.inputs.version || github.event.client_payload.version }}"
           if [ -z "$VERSION" ]; then
             echo "Error: version is empty"
             exit 1
