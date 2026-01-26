@@ -1,13 +1,13 @@
 class Ccx < Formula
   desc "CLI tool for managing multiple Claude Code settings profiles"
   homepage "https://github.com/tim80411/ccx"
-  version "0.1.1"
+  version "0.2.0"
   license "MIT"
 
   on_macos do
     on_arm do
-      url "https://github.com/tim80411/ccx/releases/download/v0.1.1/ccx-darwin-arm64"
-      sha256 "cd94a503815627db2501c95d4592a9ab403b13423e1f06e527bc45278a9e08a4"
+      url "https://github.com/tim80411/ccx/releases/download/v0.2.0/ccx-darwin-arm64"
+      sha256 "41a8c2a501fc1b27e6eb9244d8cf684e09dbfa451128ad09ca1bc8b898490667"
 
       def install
         bin.install "ccx-darwin-arm64" => "ccx"
@@ -15,8 +15,8 @@ class Ccx < Formula
     end
 
     on_intel do
-      url "https://github.com/tim80411/ccx/releases/download/v0.1.1/ccx-darwin-x64"
-      sha256 "64e2590b5368cb8cc3666d535d78c7efd280b99dc9122f091a935e57f4284bcd"
+      url "https://github.com/tim80411/ccx/releases/download/v0.2.0/ccx-darwin-x64"
+      sha256 "254f4e68009c42253e4c0d8b75b54e89fed1e816e2061df09d14194adee8a18a"
 
       def install
         bin.install "ccx-darwin-x64" => "ccx"
@@ -26,8 +26,8 @@ class Ccx < Formula
 
   on_linux do
     on_intel do
-      url "https://github.com/tim80411/ccx/releases/download/v0.1.1/ccx-linux-x64"
-      sha256 "8e41b095dca9bb362e5937eec1013c293038fb64a59e97b78f891a57c57db973"
+      url "https://github.com/tim80411/ccx/releases/download/v0.2.0/ccx-linux-x64"
+      sha256 "ac0b000dde64d4005b7bcf105ff787b56cbfecd0cc004866ae68858295365631"
 
       def install
         bin.install "ccx-linux-x64" => "ccx"
