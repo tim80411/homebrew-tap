@@ -6,7 +6,12 @@ This is a [Homebrew](https://brew.sh/) tap for tim80411's tools.
 
 ```bash
 brew tap tim80411/tap
+
+# CLI formula
 brew install ccx
+
+# Desktop app cask (macOS)
+brew install --cask tunnelbox
 ```
 
 ## Available Formulas
@@ -15,11 +20,18 @@ brew install ccx
 |---------|-------------|
 | `ccx` | CLI tool for managing multiple Claude Code settings profiles |
 
+## Available Casks
+
+| Cask | Description |
+|------|-------------|
+| `tunnelbox` | Local static website management desktop application (macOS universal) |
+
 ## Updating
 
 ```bash
 brew update
 brew upgrade ccx
+brew upgrade --cask tunnelbox
 ```
 
 ## For Maintainers
