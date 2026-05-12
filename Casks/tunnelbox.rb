@@ -1,6 +1,6 @@
 cask "tunnelbox" do
-  version "1.3.5"
-  sha256 "d23c1d4d0a60e2089bfde96e0fb8d3f2212317c648f25f7199fb7fc2b08a088e"
+  version "1.4.0"
+  sha256 "7fd6c5fd88714620869c372fe93c859d30aade9970b733e7c82e35d763eb7dd2"
 
   url "https://github.com/tim80411/tunnelbox/releases/download/v#{version}/TunnelBox-#{version}-mac-universal.dmg"
   name "TunnelBox"
